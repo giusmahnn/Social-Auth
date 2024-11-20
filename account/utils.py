@@ -1,3 +1,4 @@
+import datetime
 import re
 from django.forms import ValidationError
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -72,23 +73,31 @@ def send_email(user_email, subject, template):
     return None
 
 
-def validate_otp(user_email, otp):
+def validate_otp(user_email, otp, ttl_minutes=5):
     """
-    Function to validate the OTP sent to the user's email address.
+    Function to validate the OTP sent to the user's email.
 
     Parameters:
-    user_email (str): The email address of the recipient.
+    user_email (str): The email address of the user.
     otp (str): The OTP entered by the user.
+    ttl_minutes (int): The time-to-live (TTL) for the OTP in minutes. Default value is 5.
 
     Returns:
     bool: True if the OTP is valid, False otherwise.
     """
-    user = Account.objects.filter(email=user_email).first()
-    if user and user.otp == otp:
-        user.otp = None
-        user.save()
-        return True
-    return False
+    try:
+        user = Account.objects.filter(email=user_email).first()
+    except Account.DoesNotExist:
+        return False
+    
+    if not user.otp or not user.otp_created_at or datetime.timezone.now() > datetime.timedelta(minutes=ttl_minutes):
+        user.reset_otp()
+        return "The OTP has expired, please request a new one."  # OTP expired
+
+    if user.otp == otp:
+        user.reset_otp()
+        return "OTP validated successfully"
+    return "Invalid OTP"
 
 
 def validate_password(value):
