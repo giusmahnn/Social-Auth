@@ -75,7 +75,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 
 
-class SetNewPassword(serializers.Serializer):
+class SetNewPasswordSerializer(serializers.Serializer):
     otp = serializers.CharField()
     password = serializers.CharField()
     password_confirmation = serializers.CharField()
@@ -91,7 +91,7 @@ class SetNewPassword(serializers.Serializer):
     
 
 
-class ResetPassword(serializers.Serializer):
+class ResetPasswordSerializer(serializers.Serializer):
     password = serializers.CharField()
     password_confirmation = serializers.CharField()
 
