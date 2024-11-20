@@ -35,6 +35,7 @@ class Account(AbstractUser):
     gender = models.CharField(max_length=10, choices=Gender.choices, null=True, blank=True)
     username = models.CharField(max_length=26, null=True, blank=True, unique=True)
     otp = models.CharField(max_length=6, null=True, blank=True)
+    otp_created_at = models.DateTimeField(null=True, blank=True)
 
 
     objects = AccountManager()
@@ -42,6 +43,7 @@ class Account(AbstractUser):
     REQUIRED_FIELDS = []
 
     def cal_age(self):
+        # Calculate the age based on the date of birth, if available
         if not self.date_of_birth:
             return None
         today = datetime.date.today()
@@ -51,9 +53,16 @@ class Account(AbstractUser):
         return age
     
     def save(self, *args, **kwargs):
+        # Calculate the age based on the date of birth, if available and update the age field accordingly
         if self.date_of_birth:
             self.age = self.cal_age()
         super().save(*args, **kwargs)
+
+    def reset_otp(self):
+        # Reset the otp field to the default
+        self.otp = None
+        self.otp_created_at = None
+        self.save(update_fields=["otp", "otp_created_at"])
 
     def __str__(self):
         return f"{self.first_name or ''} {self.last_name or ''}".strip()
