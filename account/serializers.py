@@ -31,7 +31,7 @@ class AccountSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         if data["password"] != data["password_confirmation"]:
-            serializers.ValidationError("password do not match")
+            raise serializers.ValidationError("password do not match")
         try:
             validate_password(data["password"])
         except ValidationError as e:
@@ -58,7 +58,6 @@ class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Account
         fields = [
-            "id",
             "email",
             "first_name",
             "last_name",
@@ -68,10 +67,6 @@ class ProfileSerializer(serializers.ModelSerializer):
             "username",
             "phone_number"
         ]
-        extra_fields = {
-            "id": {"read_only": True},
-            "age": {"read_only": True},
-        }
 
 
 
@@ -91,15 +86,19 @@ class SetNewPasswordSerializer(serializers.Serializer):
     
 
 
-class ResetPasswordSerializer(serializers.Serializer):
+class ChangePasswordSerializer(serializers.Serializer):
+    old_password = serializers.CharField()
     password = serializers.CharField()
     password_confirmation = serializers.CharField()
 
     def validate(self, data):
-        if data["password"] != data["password_confirmation"]:
-            serializers.ValidationError("password do not match")
+        user = self.context["request"].user
+        if not user.check_password(data["old_password"]):
+            raise serializers.ValidationError("old password is incorrect")
+        if user.password != data["password"] != data["password_confirmation"]:
+            raise serializers.ValidationError("password do not match")
         try:
-            validate_password(data["password"])
+            validate_password(data["password"], user=user)
         except ValidationError as e:
             raise serializers.ValidationError(str(e))
         return data

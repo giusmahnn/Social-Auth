@@ -36,8 +36,8 @@ def auth_jwt(user):
     refresh_token = RefreshToken.for_user(user)
     access_token = refresh_token.access_token
     return {
-        'access_token': str(access_token),
-        'refresh_token': str(refresh_token)
+        'refresh_token': str(refresh_token),
+        'access_token': str(access_token)
     }
 
 
@@ -128,4 +128,4 @@ def validate_password(value):
     if not re.search(r'[!@#$%^&*(),.?":{}|<>]', value):
         raise ValidationError(
             "Password must contain at least one special character")
-    return value
+    return True
