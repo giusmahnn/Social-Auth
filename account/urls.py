@@ -7,5 +7,7 @@ urlpatterns = [
     path("login/", LoginView.as_view()),
     path("profile/", ProfileView.as_view()),
     path("set-new-password/", SetNewPasswordView.as_view()),
-    path("change-password/", ChangePasswordView.as_view())
+    path("change-password/", ChangePasswordView.as_view()),
+    path("google-signup/", GoogleAuthRedirect.as_view()),
+    path("google/callback/", GoogleAuthCallback.as_view()),
 ]
