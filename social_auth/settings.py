@@ -31,7 +31,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -46,12 +46,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
 
-    # Social auth
-    'oauth2_provider',
-    'social_django',
-    'drf_social_oauth2',
-
-    # Custom apps
     'account',
 ]
 
@@ -78,8 +72,6 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'social_django.context_processors.backends',
-                'social_django.context_processors.login_redirect'
             ],
         },
     },
@@ -149,16 +141,13 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-
-        # 'oauth2_provider.ext.rest_framework.OAuth2Authentication',  # django-oauth-toolkit < 1.0.0
-        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',  # django-oauth-toolkit >= 1.0.0
-        'drf_social_oauth2.authentication.SocialAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     ),
 }
 
+<<<<<<< HEAD
 
 # Social auth settings
 AUTHENTICATION_BACKENDS = (
@@ -176,11 +165,16 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend'
 )
 
+=======
+>>>>>>> parent of b55baa5 (google social login set up)
 # JWTAuthentication
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(days=14),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
 }
+
+
+
 
 
 # Email settings
@@ -189,6 +183,7 @@ EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+<<<<<<< HEAD
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 
 
@@ -213,3 +208,6 @@ SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
 SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
     'fields': 'id, name, email'
 }
+=======
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+>>>>>>> parent of b55baa5 (google social login set up)

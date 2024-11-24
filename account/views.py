@@ -1,10 +1,7 @@
-from django.shortcuts import redirect
-import requests
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from django.template.loader import render_to_string
-from django.conf import settings
 from rest_framework import status
 
 from . utils import *
@@ -156,6 +153,7 @@ class ProfileView(APIView):
 
             return Response(serializer.data, status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+<<<<<<< HEAD
     
 
 
@@ -244,3 +242,5 @@ class GoogleAuthCallback(APIView):
 
 
             
+=======
+>>>>>>> parent of b55baa5 (google social login set up)
