@@ -1,8 +1,0 @@
-{"web":{"client_id":"476001583685-dmoat87791qusgfmh3cmcn68018uidhb.apps.googleusercontent.com",
-"project_id":"traffic-system-441907",
-"auth_uri":"https://accounts.google.com/o/oauth2/auth",
-"token_uri":"https://oauth2.googleapis.com/token",
-"auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs",
-"client_secret":"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",
-"redirect_uris":["https://ee39-2c0f-f5c0-620-91f6-8078-b676-a78b-dfde.ngrok-free.app/signup"],
-"javascript_origins":["https://ee39-2c0f-f5c0-620-91f6-8078-b676-a78b-dfde.ngrok-free.app"]}}
