@@ -239,3 +239,8 @@ class GoogleAuthCallback(APIView):
             data['access'] = str(refresh.access_token)
             data['refresh'] = str(refresh)
             return Response(data, status=status.HTTP_201_CREATED if created else status.HTTP_200_OK)
+
+
+
+
+            
